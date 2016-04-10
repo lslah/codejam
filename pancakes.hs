@@ -16,10 +16,8 @@ format solution = unlines $ map formatLine indexed
         indexed = zip [1..] solution
 
 swaps :: String -> Int
-swaps xs =
-    if last xs == '-' then count+1 else count
+swaps xs = fst $ foldr' f (0, '+') xs
     where
-        count = fst $ foldl' f (0, head xs) xs
-
-f (count, old) new =
-    if old == new then (count, new) else (count+1, new)
+        f new (count, old)
+            | old == new = (count, new)
+            | otherwise = (count+1, new)
