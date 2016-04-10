@@ -24,10 +24,9 @@ coinjam :: Integer -> Maybe Coinjam
 coinjam int =
     liftM (Coinjam (show . last $ xs)) divisors
     where
-        a = unwords $ map show (digits 2 int)
-        xs = map (readInt (digits 2 int)) [2..10]
         divisors = mapM divisor xs
         divisor x = headMaybe $ filter (\y -> x `mod` y == 0) [2..32768]
+        xs = map (readInt (digits 2 int)) [2..10]
 
 readInt :: [Integer] -> Integer -> Integer
 readInt digits base = snd $ foldl f (1, 0) (reverse digits)
